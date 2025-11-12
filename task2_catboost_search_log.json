@@ -1,0 +1,30 @@
+[
+  {
+    "depth": 6,
+    "learning_rate": 0.05,
+    "l2_leaf_reg": 6,
+    "bagging_temperature": 0.6,
+    "roc_auc": 0.8935041282175813
+  },
+  {
+    "depth": 5,
+    "learning_rate": 0.05,
+    "l2_leaf_reg": 3,
+    "bagging_temperature": 0.6,
+    "roc_auc": 0.8951823488825674
+  },
+  {
+    "depth": 7,
+    "learning_rate": 0.03,
+    "l2_leaf_reg": 3,
+    "bagging_temperature": 0.6,
+    "roc_auc": 0.8898842528350178
+  },
+  {
+    "depth": 7,
+    "learning_rate": 0.03,
+    "l2_leaf_reg": 9,
+    "bagging_temperature": 0.2,
+    "roc_auc": 0.892831895588088
+  }
+]
