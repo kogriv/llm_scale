@@ -4,7 +4,9 @@ This script trains a CatBoostClassifier on the Task 2 dataset using
 Stratified K-Fold cross-validation. A small hyperparameter search is
 performed to reach the target ROC-AUC metric (>= 0.88). The best model is
 then refit on the full training data and predictions for the test set are
-stored in ``task2_catboost_submission.csv``.
+stored in ``data/task2/task2_catboost_submission.csv`` as well as in an
+auxiliary file that mirrors the ``example.csv`` format required by the
+task statement.
 """
 
 from __future__ import annotations
@@ -24,8 +26,9 @@ from sklearn.model_selection import StratifiedKFold
 DATA_DIR = Path("data/task2")
 TRAIN_PATH = DATA_DIR / "train.csv"
 TEST_PATH = DATA_DIR / "test.csv"
-SUBMISSION_PATH = Path("task2_catboost_submission.csv")
-SEARCH_LOG_PATH = Path("task2_catboost_search_log.json")
+SUBMISSION_PATH = DATA_DIR / "task2_catboost_submission.csv"
+SUBMISSION_SAMPLE_FORMAT_PATH = DATA_DIR / "task2_catboost_submission_like_example.csv"
+SEARCH_LOG_PATH = DATA_DIR / "task2_catboost_search_log.json"
 
 
 def load_datasets() -> tuple[pd.DataFrame, pd.DataFrame, pd.Series]:
@@ -207,7 +210,20 @@ def main() -> None:
     submission = pd.DataFrame({"id": np.arange(len(test_pred)), "target": test_pred})
     submission.to_csv(SUBMISSION_PATH, index=False)
 
+    # Сохранение файла в формате примера (только столбец target без индекса)
+    binary_submission = pd.DataFrame({
+        "target": (test_pred >= 0.5).astype(int)
+    })
+    binary_submission.to_csv(
+        SUBMISSION_SAMPLE_FORMAT_PATH,
+        index=False,
+    )
+
     print(f"Предсказания сохранены в {SUBMISSION_PATH.resolve()}")
+    print(
+        "Дополнительный файл в формате example.csv сохранён в "
+        f"{SUBMISSION_SAMPLE_FORMAT_PATH.resolve()}"
+    )
     print(f"Лог гиперпараметров сохранён в {SEARCH_LOG_PATH.resolve()}")
 
 
