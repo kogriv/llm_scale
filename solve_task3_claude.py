@@ -36,6 +36,7 @@ def solve() -> None:
     for _ in range(n):
         grid.append(next(it))
 
+    # Читаем последовательность доставок
     deliveries = next(it, "")
 
     total_cells = n * m
